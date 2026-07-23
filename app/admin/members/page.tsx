@@ -19,15 +19,24 @@ export default function AdminMembersPage() {
   }, []);
 
   async function loadMembers() {
-    setLoading(true);
+  setLoading(true);
 
-    const { data, error } = await supabase
-      .from("members")
-      .select("*")
-      .order("created_at", { ascending: false });
+  const { data, error } = await supabase
+    .from("members")
+    .select("*")
+    .order("created_at", { ascending: false });
 
+  if (error) {
+    console.error(error);
+    alert(error.message);
     setLoading(false);
+    return;
   }
+
+  setMembers(data ?? []);
+
+  setLoading(false);
+}
 
   async function saveMember(member: Member) {
   if (editingMember) {
@@ -87,9 +96,9 @@ export default function AdminMembersPage() {
   }
 
   const filteredMembers = members.filter((member) =>
-  member.id.toLowerCase().includes(search.toLowerCase()) ||
-  member.full_name.toLowerCase().includes(search.toLowerCase()) ||
-  member.email.toLowerCase().includes(search.toLowerCase())
+  (member.id ?? "").toLowerCase().includes(search.toLowerCase()) ||
+  (member.full_name ?? "").toLowerCase().includes(search.toLowerCase()) ||
+  (member.email ?? "").toLowerCase().includes(search.toLowerCase())
 );
 
   const nextMemberId = generateUniqueMemberId(
