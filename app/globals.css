@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ticker {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker 35s linear infinite;
+}
+
+.ticker-track span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 56px;
+  line-height: 56px;
+
+  padding-right: 180px;
+
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+
+  flex-shrink: 0;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  25% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.8);
+  }
+
+  75% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes gradientSlide {
+  0% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 200%;
+  }
+}
+@keyframes gradientSlide {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.gradient-button {
+  background: linear-gradient(
+    90deg,
+    #ffd54a,
+    #fdb515,
+    #f59e0b,
+    #ffd54a
+  );
+
+  background-size: 200% 100%;
+
+  animation: gradientSlide 2s linear infinite;
+}
+/* =========================
+   Premium Gold Button
+========================= */
+
+.gold-btn {
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    #ffe27a 0%,
+    #ffc72c 45%,
+    #f4a300 100%
+  );
+
+  border: 1px solid rgba(255, 230, 120, .5);
+
+  box-shadow:
+    0 10px 35px rgba(255,185,0,.35),
+    inset 0 1px 1px rgba(255,255,255,.35);
+
+  transition: all .3s ease;
+}
+
+.gold-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 50px rgba(255,185,0,.55),
+    inset 0 1px 1px rgba(255,255,255,.45);
+}
+
+/* Moving shine */
+
+.gold-btn::before{
+  content:"";
+
+  position:absolute;
+
+  top:-40%;
+  left:-45%;
+
+  width:40%;
+  height:180%;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.75),
+    transparent
+  );
+
+  transform:rotate(20deg);
+
+  animation:goldShine 3s ease-in-out infinite;
+}
+
+@keyframes goldShine{
+
+  0%{
+    left:-50%;
+  }
+
+  45%{
+    left:130%;
+  }
+
+  100%{
+    left:130%;
+  }
+
+}

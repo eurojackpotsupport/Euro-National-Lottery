@@ -1,0 +1,1 @@
+export const ADMIN_ID = "ADMIN-2026-EURO";
