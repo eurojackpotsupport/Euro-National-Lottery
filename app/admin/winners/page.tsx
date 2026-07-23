@@ -44,6 +44,15 @@ async function loadWinners() {
     .select("*")
     .order("created_at", { ascending: false });
 
+  if (error) {
+    console.error(error);
+    alert(error.message);
+    setLoading(false);
+    return;
+  }
+
+  setWinners(data ?? []);
+
   setLoading(false);
 }
 
@@ -157,7 +166,21 @@ async function deleteWinner(id: number) {
         </div>
 
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => {
+  setEditingId(null);
+
+  setWinnerName("");
+  setMemberId("");
+  setCountry("");
+  setPrize("");
+  setDrawDate("");
+  setWinnerPhoto("");
+  setIsFeatured(false);
+  setIsVisible(true);
+  setDisplayOrder(1);
+
+  setOpen(true);
+}}
           className="rounded-xl bg-yellow-500 px-6 py-3 font-bold text-black transition hover:bg-yellow-400"
         >
           + Add Winner
@@ -371,7 +394,10 @@ async function deleteWinner(id: number) {
             <div className="mt-8 flex justify-end gap-4">
 
               <button
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                setOpen(false);
+                setEditingId(null);
+                }}
                 className="rounded-lg bg-slate-600 px-6 py-3 text-white"
               >
                 Cancel
