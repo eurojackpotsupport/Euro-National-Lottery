@@ -18,6 +18,10 @@ const menus = [
     href: "/admin/jackpot",
   },
   {
+  name: "Vault",
+  href: "/admin/vault",
+},
+  {
     name: "Results",
     href: "/admin/results",
   },

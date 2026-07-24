@@ -137,12 +137,6 @@ export default function VaultHero() {
       <div className="mt-08">
         <VaultSection />
       </div>
-
-      {/* Desktop Feature Bar */}
-      <div className="mt-10 hidden xl:block">
-        <FeatureBar />
-      </div>
-
     </section>
   );
 }
