@@ -1,42 +1,26 @@
 "use client";
-import { Gem } from "lucide-react";
-import PredictionCountdown from "./PredictionCountdown";
-import { Lock, LockKeyhole } from "lucide-react";
+
 import { useState } from "react";
+import { supabase } from "@/lib/supabase-browser";
+import PredictionCountdown from "./PredictionCountdown";
+import { Lock } from "lucide-react";
 import MembershipModal from "./MembershipModal";
+import { useRouter } from "next/navigation";
 const packages = [
   {
-    title: "Gold Package A",
+    title: "Gold Package",
     locked: true,
     numbers: ["07", "14", "19", "28", "42"],
     stars: ["03", "09"],
   },
   {
-    title: "Gold Package B",
-    locked: true,
-    numbers: ["05", "11", "23", "37", "49"],
-    stars: ["01", "10"],
-  },
-  {
-    title: "Platinum Package A",
+    title: "Platinum Package",
     locked: true,
     numbers: ["02", "18", "27", "34", "50"],
     stars: ["06", "11"],
   },
   {
-    title: "Platinum Package B",
-    locked: true,
-    numbers: ["", "", "", "", ""],
-    stars: ["", ""],
-  },
-  {
-    title: "Diamond Package A",
-    locked: true,
-    numbers: ["", "", "", "", ""],
-    stars: ["", ""],
-  },
-  {
-    title: "Diamond Package B",
+    title: "Diamond Package",
     locked: true,
     numbers: ["", "", "", "", ""],
     stars: ["", ""],
@@ -44,15 +28,55 @@ const packages = [
 ];
 
 export default function PredictionRoom() {
+  const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
+const [selectedPackage, setSelectedPackage] = useState("");
+
+const [verifyLoading, setVerifyLoading] = useState(false);
+const [verifyError, setVerifyError] = useState("");
+async function verifyMembership(code: string) {
+  try {
+    setVerifyLoading(true);
+    setVerifyError("");
+
+    const { data, error } = await supabase
+      .from("membership_codes")
+      .select("*")
+      .eq("membership_code", code.trim())
+      .eq("active", true)
+      .single();
+
+    if (error || !data) {
+      setVerifyError("Invalid membership code.");
+      return;
+    }
+
+    if (
+      data.package_type.toLowerCase() !==
+      selectedPackage.replace(" Package", "").toLowerCase()
+    ) {
+      setVerifyError(
+        "This membership code does not match this package."
+      );
+      return;
+    }
+
+    localStorage.setItem("membershipCode", data.membership_code);
+localStorage.setItem("packageType", data.package_type);
+
+setOpenModal(false);
+
+// Redirect to the new VIP member page
+router.push("/dashboard/vault/member");
+  } finally {
+    setVerifyLoading(false);
+  }
+}
   return (
     <section className="w-full">
       <div className="mx-auto w-full max-w-[1500px] px-4 sm:px-6 xl:px-8">
 
-        {/* Countdown */}
-        <div className="mt-10">
-  <PredictionCountdown />
-</div>
+        
 
         {/* Heading */}
         <h2 className="mt-20 mb-12 text-center text-4xl font-black text-yellow-400 md:mt-24 md:text-6xl">
@@ -116,7 +140,10 @@ export default function PredictionRoom() {
 
               {/* View Numbers Button */}
               <button
-  onClick={() => setOpenModal(true)}
+  onClick={() => {
+    setSelectedPackage(pkg.title);
+    setOpenModal(true);
+  }}
   className="
     gradient-btn-gold
     group
@@ -157,9 +184,15 @@ export default function PredictionRoom() {
         </div>
 
       </div>
-      <MembershipModal
+            <MembershipModal
   open={openModal}
-  onClose={() => setOpenModal(false)}
+  onClose={() => {
+    setVerifyError("");
+    setOpenModal(false);
+  }}
+  onVerify={verifyMembership}
+  loading={verifyLoading}
+  error={verifyError}
 />
     </section>
   );

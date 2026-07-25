@@ -14,6 +14,11 @@ const cards = [
     href: "/admin/jackpot",
   },
   {
+    title: "Vault",
+    description: "Manage Vault Settings",
+    href: "/admin/vault",
+  },
+  {
     title: "Results",
     description: "Publish Draw Results",
     href: "/admin/results",
@@ -24,9 +29,19 @@ const cards = [
     href: "/admin/winners",
   },
   {
+    title: "Contact",
+    description: "Update Contact Information",
+    href: "/admin/contact",
+  },
+  {
     title: "Notifications",
-    description: "Send Notifications",
+    description: "Manage Notifications",
     href: "/admin/notifications",
+  },
+  {
+    title: "Announcement",
+    description: "Manage Announcement Bar",
+    href: "/admin/announcement",
   },
   {
     title: "Settings",
@@ -39,10 +54,7 @@ export default function AdminDashboard() {
   return (
     <div className="mx-auto max-w-7xl">
 
-      {/* Header */}
-
       <div className="rounded-3xl border border-yellow-500/20 bg-[#102b52] p-8">
-
         <p className="text-sm uppercase tracking-[6px] text-yellow-400">
           EuroMillions
         </p>
@@ -54,20 +66,14 @@ export default function AdminDashboard() {
         <p className="mt-3 text-slate-400">
           Welcome back, Administrator.
         </p>
-
       </div>
 
-      {/* Cards */}
-
       <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-
         {cards.map((card) => (
-
           <div
             key={card.href}
             className="rounded-2xl border border-yellow-500/20 bg-[#102b52] p-6"
           >
-
             <h2 className="text-2xl font-bold text-white">
               {card.title}
             </h2>
@@ -82,11 +88,8 @@ export default function AdminDashboard() {
             >
               Open
             </Link>
-
           </div>
-
         ))}
-
       </div>
 
     </div>

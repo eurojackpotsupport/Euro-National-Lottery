@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import MemberForm from "@/components/admin/forms/MemberForm";
 import { Member } from "@/data/members";
 import { generateUniqueMemberId } from "@/lib/generateMemberId";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-browser";
 
 export default function AdminMembersPage() {
   const [members, setMembers] = useState<Member[]>([]);

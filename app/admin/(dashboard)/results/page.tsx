@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-browser";
 import ResultsTable from "@/components/admin/results/ResultsTable";
 import ResultForm from "@/components/admin/results/ResultForm";
 import type { Result } from "@/types/result";

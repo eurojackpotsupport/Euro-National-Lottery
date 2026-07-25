@@ -1,5 +1,7 @@
 "use client";
 
+import { supabase } from "@/lib/supabase-browser";
+import MembershipModal from "./MembershipModal";
 import { useState } from "react";
 import Image from "next/image";
 import { Lock, Gem } from "lucide-react";
@@ -9,46 +11,27 @@ import PredictionRoom from "./PredictionRoom";
 import VaultLoadingOverlay from "./VaultLoadingOverlay";
 
 export default function VaultSection() {
-  const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [decrypting, setDecrypting] = useState(false);
   const [opened, setOpened] = useState(false);
+const [showMembershipModal, setShowMembershipModal] = useState(false);
+const [verifyLoading, setVerifyLoading] = useState(false);
+const [verifyError, setVerifyError] = useState("");
+
+const [selectedPackage, setSelectedPackage] = useState<any>(null);
 
   const handleUnlock = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      setPlaying(true);
-    }, 700);
-  };
-
+  setPlaying(true);
+};
   return (
     <div className="relative flex flex-col items-center">
-
-      {/* Verify Loading */}
-      {loading && (
-        <VaultLoadingOverlay text="VERIFYING MEMBER" />
-      )}
-
-      {/* Decrypt Loading */}
-      {decrypting && (
-        <VaultLoadingOverlay text="ACCESS GRANTED" />
-      )}
 
       {/* Video */}
       <VaultVideoOverlay
         open={playing}
-        onFinished={() => {
-          setPlaying(false);
-
-          setDecrypting(true);
-
-          setTimeout(() => {
-  setDecrypting(false);
+       onFinished={() => {
+  setPlaying(false);
   setOpened(true);
-}, 1000);
-        }}
+}}
       />
 
       {/* Background */}
@@ -117,7 +100,7 @@ export default function VaultSection() {
           {/* Button */}
           <button
             onClick={handleUnlock}
-            disabled={loading || playing || decrypting}
+            disabled={playing}
             className="
               relative
               z-20
@@ -155,13 +138,9 @@ export default function VaultSection() {
           >
             <Lock size={22} />
 
-            {loading
-              ? "Verifying..."
-              : playing
-              ? "Opening Vault..."
-              : decrypting
-              ? "Decrypting..."
-              : "Unlock Secure Vault"}
+            {playing
+  ? "Opening Vault..."
+  : "Unlock Secure Vault"}
           </button>
 
           {/* Member */}
@@ -185,6 +164,7 @@ export default function VaultSection() {
           <PredictionRoom />
         </div>
       )}
+      
     </div>
   );
 }

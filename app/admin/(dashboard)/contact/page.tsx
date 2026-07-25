@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-browser";
 import type { ContactSettings } from "@/types/contact";
 
 export default function ContactPage() {

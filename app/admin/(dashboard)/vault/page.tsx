@@ -1,11 +1,14 @@
 "use client";
 
+import PackageEditor from "@/components/vault/PackageEditor";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-browser";
 
 export default function VaultAdminPage() {
   const [loading, setLoading] = useState(true);
 
+  const [packages, setPackages] = useState<any[]>([]);
+  const [codes, setCodes] = useState<any[]>([]);
   const [form, setForm] = useState({
     title: "",
     subtitle: "",
@@ -14,9 +17,14 @@ export default function VaultAdminPage() {
     status: "locked",
   });
 
-  useEffect(() => {
-    loadSettings();
-  }, []);
+ useEffect(() => {
+  async function init() {
+    await loadSettings();
+    await loadPackages();
+  }
+
+  init();
+}, []);
 
   async function loadSettings() {
     const { data, error } = await supabase
@@ -40,20 +48,138 @@ export default function VaultAdminPage() {
 
     setLoading(false);
   }
+async function loadPackages() {
+  const {
+    data: packageData,
+    error: packageError,
+  } = await supabase
+    .from("vault_packages")
+    .select("*")
+    .order("id", { ascending: true });
 
-  async function saveSettings() {
-    const { error } = await supabase
-      .from("vault_settings")
-      .update(form)
-      .eq("id", 1);
+  console.log("Packages:", packageData);
+  console.log("Package Error:", packageError);
 
-    if (!error) {
-      alert("Vault settings updated successfully.");
-    } else {
-      alert(error.message);
+  const {
+    data: codeData,
+    error: codeError,
+  } = await supabase
+    .from("vault_codes")
+    .select("*");
+
+  console.log("Codes:", codeData);
+  console.log("Code Error:", codeError);
+
+  if (packageError) {
+    console.error(packageError);
+    return;
+  }
+
+  if (codeError) {
+    console.error(codeError);
+    return;
+  }
+
+  setPackages(packageData ?? []);
+  setCodes(codeData ?? []);
+}
+
+async function saveSettings() {
+  const { error } = await supabase
+    .from("vault_settings")
+    .update({
+      title: form.title,
+      subtitle: form.subtitle,
+      draw_date: form.draw_date,
+      draw_time: form.draw_time,
+      status: form.status,
+    })
+    .eq("id", 1);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Vault settings updated successfully.");
+}
+  async function savePackage(pkg: any) {
+  const { error: packageError } = await supabase
+    .from("vault_packages")
+    .update({
+      ball1: pkg.ball1,
+      ball2: pkg.ball2,
+      ball3: pkg.ball3,
+      ball4: pkg.ball4,
+      ball5: pkg.ball5,
+      star1: pkg.star1,
+      star2: pkg.star2,
+      draw_date: pkg.draw_date,
+      active: pkg.active,
+    })
+    .eq("id", pkg.id);
+
+  if (packageError) {
+    alert(packageError.message);
+    return;
+  }
+
+  const codeRow = codes.find(
+    (c) => c.package_type === pkg.package_type
+  );
+
+  if (codeRow) {
+    const { error: codeError } = await supabase
+      .from("vault_codes")
+      .update({
+        code: pkg.code,
+        draw_date: pkg.draw_date,
+        active: pkg.active,
+      })
+      .eq("id", codeRow.id);
+
+    if (codeError) {
+      alert(codeError.message);
+      return;
     }
   }
 
+  await loadPackages();
+
+  alert(`${pkg.package_name} updated successfully.`);
+}
+
+function updatePackage(
+  index: number,
+  field: string,
+  value: any
+) {
+  const updatedPackages = [...packages];
+
+  updatedPackages[index] = {
+    ...updatedPackages[index],
+    [field]: value,
+  };
+
+  setPackages(updatedPackages);
+
+  if (field === "code") {
+    const updatedCodes = [...codes];
+    const codeIndex = updatedCodes.findIndex(
+      (c) =>
+        c.package_type === updatedPackages[index].package_type
+    );
+
+    if (codeIndex !== -1) {
+      updatedCodes[codeIndex] = {
+        ...updatedCodes[codeIndex],
+        code: value,
+      };
+
+      setCodes(updatedCodes);
+    }
+  }
+}
   if (loading) {
     return (
       <div className="flex h-[70vh] items-center justify-center">
@@ -63,7 +189,8 @@ export default function VaultAdminPage() {
       </div>
     );
   }
-
+console.log("packages state:", packages);
+console.log("codes state:", codes);
   return (
     <div className="mx-auto max-w-4xl p-8">
 
@@ -195,6 +322,31 @@ export default function VaultAdminPage() {
 
         </div>
 
+            </div>
+
+      {/* VIP Packages */}
+
+      <div className="mt-16">
+        <h2 className="mb-8 text-center text-4xl font-black text-yellow-400">
+          VIP Packages
+        </h2>
+
+        {packages.map((pkg, index) => (
+          <PackageEditor
+            key={pkg.id}
+            data={{
+              ...pkg,
+              code:
+                codes.find(
+                  (c) => c.package_type === pkg.package_type
+                )?.code || "",
+            }}
+            onChange={(field, value) =>
+              updatePackage(index, field as string, value)
+            }
+            onSave={() => savePackage(packages[index])}
+          />
+        ))}
       </div>
 
     </div>

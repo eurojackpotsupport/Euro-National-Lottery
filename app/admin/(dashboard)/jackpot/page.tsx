@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-browser";
 
 export default function JackpotPage() {
   const [amount, setAmount] = useState("");
@@ -14,41 +14,51 @@ export default function JackpotPage() {
   }, []);
 
   async function loadJackpot() {
-    const { data, error } = await supabase
-      .from("jackpot")
-      .select("*")
-      .eq("id", 1)
-      .maybeSingle();
+  const { data, error } = await supabase
+    .from("jackpot")
+    .select("*")
+    .eq("id", 1)
+    .maybeSingle();
 
-    if (data) {
-      setAmount(data.amount);
-      setNextDraw(data.next_draw);
-      setTime(data.time);
-    }
+  console.log("Loaded jackpot:", data);
+  console.log("Load error:", error);
+
+  if (data) {
+    setAmount(data.amount);
+    setNextDraw(data.next_draw);
+    setTime(data.time);
   }
+}
 
   async function saveJackpot() {
-    setLoading(true);
+  setLoading(true);
+  
+  const { data: { session } } = await supabase.auth.getSession();
 
-    const { error } = await supabase
-      .from("jackpot")
-      .update({
-        amount,
-        next_draw: nextDraw,
-        time,
-      })
-      .eq("id", 1);
+console.log(session);
+alert(session?.user?.email || "No session");
+  const { data, error } = await supabase
+    .from("jackpot")
+    .update({
+      amount,
+      next_draw: nextDraw,
+      time,
+    })
+    .eq("id", 1)
+    .select();
 
-    setLoading(false);
+  console.log("Updated rows:", data);
+  console.log("Error:", error);
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+  setLoading(false);
 
-    alert("Jackpot updated successfully.");
+  if (error) {
+    alert(error.message);
+    return;
   }
 
+  alert("Done");
+}
   return (
     <main className="min-h-screen bg-[#081B33] p-8">
       <div className="mx-auto max-w-3xl rounded-3xl bg-[#102b52] p-8">
