@@ -66,10 +66,9 @@ setJackpot(data);
   </div>
 
   {/* Title */}
-  <h2 className="mt-5 text-4xl font-black text-white md:text-5xl">
+  <h2 className="mt-5 text-3xl md:text-4xl font-black text-white md:text-3xl md:text-4xl md:text-5xl">
     Next EuroMillions Draw
   </h2>
-
 </div>
 
       {/* Card */}
@@ -87,8 +86,8 @@ setJackpot(data);
     from-[#183964]
     via-[#153359]
     to-[#10284B]
-    p-8
-    shadow-[0_20px_70px_rgba(0,0,0,.45)]
+    p-3 md:p-3
+    shadow-[0_35px_100px_rgba(0,0,0,.75),0_0_70px_rgba(255,193,7,.18)]
     transition-all
     duration-500
    hover:-translate-y-2
@@ -107,8 +106,7 @@ hover:scale-[1.01]
 <div className="pointer-events-none absolute inset-0 rounded-[34px] border border-yellow-300/10" />
 
 <div className="pointer-events-none absolute inset-0 rounded-[34px] bg-gradient-to-r from-transparent via-yellow-300/10 to-transparent opacity-40" />
-{/* Glass Reflection */}
-<div className="pointer-events-none absolute left-80 right-80 top-0 h-24 rounded-b-[100px] bg-gradient-to-b from-white/10 via-white/5 to-transparent" />
+
 {/* Floating Particles */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[34px]">
 
@@ -121,19 +119,21 @@ hover:scale-[1.01]
   <div className="absolute right-[28%] bottom-[30%] h-1.5 w-1.5 animate-pulse rounded-full bg-white/60 blur-[1px]" style={{ animationDelay: "1.5s" }} />
 
 </div>
-<div className="relative z-10"></div>
+<div className="relative z-10">
         {/* Locked Main Balls */}
-        <div className="mx-auto mb-8 h-px w-40 bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
+        <div className="mx-auto mb-4 h-px w-32 bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
         {/* Premium Locked Balls */}
-<div className="flex justify-center gap-4">
+<div className="flex justify-center gap-3">
   {Array.from({ length: 5 }).map((_, i) => (
     <div
   key={i}
   className="
     relative
     flex
-    h-16
-    w-16
+    h-12 
+    w-12 
+    md:h-16 
+    md:w-16
     items-center
     justify-center
     rounded-full
@@ -172,11 +172,11 @@ hover:scale-[1.01]
   ))}
 </div>
         {/* Locked Lucky Stars */}
-        <div className="mt-7 flex justify-center gap-4">
+        <div className="mt-3 flex justify-center gap-3">
           {Array.from({ length: 2 }).map((_, i) => (
             <div
   key={i}
-  className="relative h-20 w-20 transition-all duration-300 transition-all
+  className="relative h-16 w-16 md:h-20 md:w-20 transition-all duration-300 transition-all
 duration-500
 hover:-translate-y-2
 hover:scale-105
@@ -201,23 +201,8 @@ drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.
           ))}
         </div>
 
-        {/* Next Draw */}
-        {/* VIP Security Badge */}
-<div className="mt-7 flex justify-center">
-  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2 shadow-lg">
-    <Lock
-      size={16}
-      className="text-emerald-400"
-      strokeWidth={2.5}
-    />
-
-    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400">
-      Military Grade Protection
-    </span>
-  </div>
-</div>
 {/* VIP Status */}
-<div className="mt-8 rounded-3xl border border-yellow-400/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
+<div className="mt-5 md:mt-8 rounded-3xl border border-yellow-400/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl p-3 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
 
   <div className="flex items-center justify-between">
 
@@ -240,9 +225,9 @@ drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.
 
   </div>
 
-  <div className="mt-4 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
+  <div className="mt-3 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
 
-  <p className="mt-4 text-sm leading-6 text-slate-300">
+  <p className="mt-3 text-sm leading-5 text-slate-300">
   <span className="font-bold text-white">
     Predictions become available exactly
   </span>{" "}
@@ -255,9 +240,9 @@ drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.
 </p>
 </div>
 {/* Draw Information */}
-<div className="mt-8 grid grid-cols-2 gap-4">
+<div className="mt-4 grid grid-cols-2 gap-3">
 
-  <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
       Draw Time
     </p>
@@ -267,7 +252,7 @@ drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.
 </p>
   </div>
 
-  <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
       Status
     </p>
@@ -283,50 +268,36 @@ drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.
 
 </div>
 {/* Next Draw */}
-<div className="mt-8 text-center">
+<div className="mt-4 text-center">
           <p className="text-sm md:text-base font-black uppercase tracking-[0.4em] text-yellow-300 drop-shadow-[0_0_10px_rgba(250,204,21,.5)]">
   OFFICIAL DRAW DATE
 </p>
-<h3 className="mt-3 text-2xl font-extrabold text-white">
+<h3 className="mt-2 text-xl md:text-2xl font-extrabold text-white">
             {jackpot?.next_draw
   ? formatDrawDate(jackpot.next_draw)
   : "Loading..."}
           </h3>
         </div>
-        <div className="mt-5 flex justify-center">
-  <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2">
-    <div className="h-2.5 w-2.5 rounded-full bg-green-400 animate-pulse" />
-    <span className="text-xs font-bold uppercase tracking-[0.18em] text-green-400">
-      Verified Official Draw
-    </span>
-  </div>
-</div>
 
         {/* Divider */}
-        <div className="relative my-8">
+        <div className="relative my-5">
   <div className="h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
   <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-400 shadow-[0_0_15px_rgba(250,204,21,.9)]" />
 </div>
 
         {/* Jackpot */}
         <div className="text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.35em] text-yellow-400">
+          <p className="text-xl md:text-2xl font-black uppercase tracking-[0.18em] text-yellow-400 drop-shadow-[0_0_8px_rgba(255,193,7,.45)]">
   ESTIMATED JACKPOT
 </p>
 
-<h3 className="mt-3 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-6xl md:text-7xl animate-pulse tracking-tight font-black text-transparent">
+<h3 className="mt-3 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-5xl md:text-6xl animate-pulse tracking-tight font-black text-transparent">
             {jackpot?.amount ?? "Loading..."}
           </h3>
-          <div className="mx-auto mt-5 h-1 w-40 rounded-full bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
+          <div className="mx-auto mt-3 h-1 w-32 rounded-full bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
         </div>
       </div>
-      <div className="mt-8 flex justify-center">
-  <div className="rounded-full border border-white/10 bg-white/5 px-5 py-2">
-    <span className="text-xs uppercase tracking-[0.25em] text-slate-400">
-      Official EuroMillions Center
-    </span>
-  </div>
-</div>
+      </div>
     </section>
   );
 }

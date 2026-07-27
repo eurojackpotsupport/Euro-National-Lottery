@@ -10,7 +10,7 @@ const ADMIN_EMAIL = "cpamegahub@gmail.com";
 const menus = [
   { name: "Dashboard", href: "/admin" },
   { name: "Members", href: "/admin/members" },
-  { name: "Membership Codes", href: "/admin/membership-codes" }, // <-- ADD THIS
+  { name: "Membership Codes", href: "/admin/membership-codes" },
   { name: "Jackpot", href: "/admin/jackpot" },
   { name: "VIP Vault", href: "/admin/vault" },
   { name: "Results", href: "/admin/results" },
@@ -74,8 +74,24 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#081B33]">
-      <aside className="flex w-72 flex-col border-r border-yellow-500/20 bg-[#061529]">
+    <div className="bg-[#081B33]">
+
+      {/* Fixed Sidebar */}
+      <aside
+        className="
+          fixed
+          left-0
+          top-0
+          z-50
+          flex
+          h-screen
+          w-72
+          flex-col
+          border-r
+          border-yellow-500/20
+          bg-[#061529]
+        "
+      >
         <div className="p-8">
           <h2 className="text-3xl font-black text-yellow-400">
             EuroMillions
@@ -86,7 +102,7 @@ export default function AdminLayout({
           </p>
         </div>
 
-        <nav className="flex-1 space-y-2 px-4">
+        <nav className="flex-1 overflow-y-auto space-y-2 px-4 pb-4">
           {menus.map((menu) => (
             <Link
               key={menu.href}
@@ -102,7 +118,7 @@ export default function AdminLayout({
           ))}
         </nav>
 
-        <div className="p-4">
+        <div className="border-t border-yellow-500/20 p-4">
           <button
             onClick={logout}
             className="w-full rounded-xl bg-red-600 px-5 py-4 font-bold text-white transition hover:bg-red-700"
@@ -112,7 +128,20 @@ export default function AdminLayout({
         </div>
       </aside>
 
-      <main className="flex-1 p-8">{children}</main>
+      {/* Main Content */}
+      <main
+        className="
+          ml-72
+          h-screen
+          overflow-y-auto
+          bg-[#081B33]
+          px-10
+          py-8
+        "
+      >
+        {children}
+      </main>
+
     </div>
   );
 }

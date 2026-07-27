@@ -112,11 +112,37 @@ const countdown = [
 ];
 
   return (
-    <section className="relative overflow-hidden rounded-[32px] border border-yellow-500/20 bg-gradient-to-br from-[#081B33] via-[#0B2345] to-[#06182F] p-5 shadow-2xl sm:p-8 lg:p-10">
+    <section
+  className="
+    relative
+    overflow-hidden
+
+    rounded-none
+    border-0
+    shadow-none
+    p-3
+
+    sm:rounded-[32px]
+    sm:border
+    sm:border-yellow-500/20
+    shadow-none
+sm:shadow-2xl
+    sm:p-8
+
+    lg:p-10
+
+    bg-transparent
+
+sm:bg-gradient-to-br
+sm:from-[#081B33]
+sm:via-[#0B2345]
+sm:to-[#06182F]
+  "
+>
 
       {/* Background Glow */}
 
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-500/10 blur-[120px]" />
+      <div className="hidden sm:block pointer-events-none absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-500/10 blur-[120px]" />
 
       <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-blue-500/10 blur-[120px]" />
 
@@ -315,7 +341,7 @@ const countdown = [
 
       {/* Premium Footer Glow */}
             {/* Decorative Glow */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center">
+      <div className="hidden sm:flex pointer-events-none absolute inset-x-0 bottom-0 justify-center">
         <div className="h-32 w-[80%] rounded-full bg-yellow-500/10 blur-3xl" />
       </div>
 

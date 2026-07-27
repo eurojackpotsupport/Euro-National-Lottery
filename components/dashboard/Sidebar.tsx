@@ -8,12 +8,7 @@ type SidebarProps = {
   onClose: () => void;
 };
 
-const menus: {
-  name: string;
-  href: string;
-  icon: string;
-  badge?: string;
-}[] = [
+const menus = [
   {
     name: "Dashboard",
     href: "/dashboard",
@@ -25,12 +20,11 @@ const menus: {
     icon: "🎫",
   },
   {
-  name: "VIP Vault",
-  href: "/dashboard/vault",
-  icon: "💎",
-  badge: "dot",
-},
-  
+    name: "VIP Vault",
+    href: "/dashboard/vault",
+    icon: "💎",
+    badge: "dot",
+  },
   {
     name: "Notifications",
     href: "/dashboard/notifications",
@@ -62,92 +56,84 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Overlay */}
-
+      {/* Mobile Overlay */}
       <div
         onClick={onClose}
         className={`fixed inset-0 z-40 bg-black/60 transition-opacity lg:hidden ${
           open
-            ? "opacity-100 visible"
-            : "opacity-0 invisible"
+            ? "visible opacity-100"
+            : "invisible opacity-0"
         }`}
       />
 
       {/* Sidebar */}
-
       <aside
-        className={`fixed lg:static top-0 left-0 z-50 flex h-screen w-72 flex-col bg-[#061529] border-r border-yellow-500/20 transform transition-transform duration-300 ${
-          open
-            ? "translate-x-0"
-            : "-translate-x-full lg:translate-x-0"
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-yellow-500/20 bg-[#061529] transition-transform duration-300 lg:translate-x-0 ${
+          open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-
         {/* Header */}
+        <div className="px-7 pt-8 pb-6">
+          <h2 className="text-3xl font-black text-yellow-400">
+            EuroMillions
+          </h2>
 
-        <div className="flex items-center justify-between p-8">
-
-          <div>
-
-            <h2 className="text-3xl font-black text-yellow-400">
-              EuroMillions
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-400">
-              Official Membership
-            </p>
-
-          </div>
-
-          
+          <p className="mt-1 text-sm text-slate-400">
+            Official Membership
+          </p>
         </div>
 
-        {/* Navigation */}
+        {/* Menu */}
+        <nav className="flex-1 overflow-y-auto px-3 py-2">
+          <div className="space-y-2">
+            {menus.map((menu) => {
+              const active = pathname === menu.href;
 
-        <nav className="flex-1 px-4 space-y-2">
+              return (
+                <Link
+                  key={menu.href}
+                  href={menu.href}
+                  onClick={onClose}
+                  className={`flex w-full items-center rounded-xl px-5 py-4 transition-all duration-200 ${
+                    active
+                      ? "bg-yellow-500 text-black shadow-lg"
+                      : "text-slate-300 hover:bg-[#10284a]"
+                  }`}
+                >
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <span className="flex h-6 w-6 items-center justify-center text-xl">
+                        {menu.icon}
+                      </span>
 
-          {menus.map((menu) => (
+                      <span
+                        className={`text-[16px] ${
+                          active ? "font-bold" : "font-medium"
+                        }`}
+                      >
+                        {menu.name}
+                      </span>
+                    </div>
 
-            <Link
-              key={menu.href}
-              href={menu.href}
-              onClick={onClose}
-              className={`group flex items-center gap-4 rounded-xl px-5 py-4 transition-all duration-300 ${
-                pathname === menu.href
-                  ? "bg-yellow-500 text-black font-bold shadow-lg"
-                  : "text-slate-300 hover:bg-[#10284a] hover:translate-x-1"
-              }`}
-            >
-              <div className="flex w-full items-center justify-between">
-  <div className="flex items-center gap-4">
-    <span className="text-xl transition-transform duration-300 group-hover:scale-110">
-      {menu.icon}
-    </span>
+                    {menu.badge && (
+                      <span className="relative flex h-3 w-3">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75"></span>
 
-    <span>{menu.name}</span>
-  </div>
-
-  {menu.badge && (
-  <span className="relative flex h-3 w-3">
-    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75"></span>
-    <span className="relative inline-flex h-3 w-3 rounded-full bg-yellow-400 shadow-[0_0_12px_rgba(250,204,21,0.9)]"></span>
-  </span>
-)}
-</div>
-
-            </Link>
-
-          ))}
-
+                        <span className="relative inline-flex h-3 w-3 rounded-full bg-yellow-400 shadow-[0_0_12px_rgba(250,204,21,.9)]"></span>
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Logout */}
-
         <div className="border-t border-slate-700 p-4">
-
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-4 rounded-xl border border-slate-700 bg-[#0B1F3A] px-5 py-4 text-white transition-all duration-300 hover:bg-[#132B4D] hover:border-yellow-500"
+            className="flex w-full items-center gap-4 rounded-xl border border-slate-700 bg-[#0B1F3A] px-5 py-4 text-white transition hover:border-yellow-500 hover:bg-[#132B4D]"
           >
             <span className="text-xl text-yellow-400">
               🚪
@@ -156,11 +142,8 @@ export default function Sidebar({
             <span className="font-semibold">
               Logout
             </span>
-
           </button>
-
         </div>
-
       </aside>
     </>
   );

@@ -11,13 +11,33 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#081B33]">
-      <Sidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
+    <div className="bg-[#081B33]">
 
-      <main className="flex-1 overflow-y-auto bg-[#081B33]">
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block fixed left-0 top-0 z-50 h-screen w-72">
+        <Sidebar
+          open={true}
+          onClose={() => {}}
+        />
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div className="lg:hidden">
+        <Sidebar
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
+      </div>
+
+      {/* Main Content */}
+     <main
+  className="
+    lg:ml-72
+    h-screen
+    overflow-y-auto
+    bg-[#081B33]
+        "
+      >
         {/* Mobile Header */}
         <div className="sticky top-0 z-30 flex items-center justify-between border-b border-yellow-500/20 bg-[#081B33] px-6 py-4 lg:hidden">
           <button
@@ -34,11 +54,9 @@ export default function DashboardLayout({
           <div className="w-10" />
         </div>
 
-        {/* Desktop = no padding */}
-        <div className="p-0 lg:p-0">
-          {children}
-        </div>
+        {children}
       </main>
+
     </div>
   );
 }
