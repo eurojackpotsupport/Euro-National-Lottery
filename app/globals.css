@@ -603,3 +603,45 @@ body {
         0 0 12px rgba(255,255,255,.4);
 
 }
+/* ===========================================
+   Premium Membership Card Shine
+=========================================== */
+
+@keyframes glassReflection {
+  0% {
+    transform: translateX(-15%) rotate(12deg);
+  }
+
+  50% {
+    transform: translateX(8%) rotate(12deg);
+  }
+
+  100% {
+    transform: translateX(-15%) rotate(12deg);
+  }
+}
+
+.glass-reflection {
+  animation: glassReflection 12s ease-in-out infinite;
+}
+.particle {
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 215, 0, 0.7);
+  animation: particleFloat 8s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes particleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-12px);
+    opacity: 1;
+  }
+}
