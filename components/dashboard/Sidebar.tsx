@@ -84,7 +84,7 @@ export default function Sidebar({
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 overflow-y-auto px-3 py-1 lg:py-2">
+        <nav className="overflow-y-auto px-3 py-1 lg:flex-1 lg:py-2">
           <div className="space-y-1 lg:space-y-2">
             {menus.map((menu) => {
               const active = pathname === menu.href;
