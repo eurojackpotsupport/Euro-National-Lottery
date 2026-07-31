@@ -73,7 +73,7 @@ export default function Sidebar({
         }`}
       >
         {/* Header */}
-        <div className="px-7 pt-8 pb-6">
+        <div className="px-7 pt-7 pb-5 lg:px-7 lg:pt-8 lg:pb-6">
           <h2 className="text-3xl font-black text-yellow-400">
             EuroMillions
           </h2>
@@ -84,8 +84,8 @@ export default function Sidebar({
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 overflow-y-auto px-3 py-2">
-          <div className="space-y-2">
+        <nav className="flex-1 overflow-y-auto px-3 py-1 lg:py-2">
+          <div className="space-y-1 lg:space-y-2">
             {menus.map((menu) => {
               const active = pathname === menu.href;
 
@@ -94,7 +94,7 @@ export default function Sidebar({
                   key={menu.href}
                   href={menu.href}
                   onClick={onClose}
-                  className={`flex w-full items-center rounded-xl px-5 py-4 transition-all duration-200 ${
+                  className={`flex w-full items-center rounded-xl px-5 py-3 lg:py-4 transition-all duration-200 ${
                     active
                       ? "bg-yellow-500 text-black shadow-lg"
                       : "text-slate-300 hover:bg-[#10284a]"
@@ -107,7 +107,7 @@ export default function Sidebar({
                       </span>
 
                       <span
-                        className={`text-[16px] ${
+                        className={`text-[15px] lg:text-[16px] ${
                           active ? "font-bold" : "font-medium"
                         }`}
                       >
@@ -130,10 +130,10 @@ export default function Sidebar({
         </nav>
 
         {/* Logout */}
-        <div className="border-t border-slate-700 p-4">
+        <div className="border-t border-slate-700 p-3 lg:p-4">
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-4 rounded-xl border border-slate-700 bg-[#0B1F3A] px-5 py-4 text-white transition hover:border-yellow-500 hover:bg-[#132B4D]"
+            className="flex w-full items-center gap-4 rounded-xl border border-slate-700 bg-[#0B1F3A] px-5 py-3 lg:py-4 text-white transition hover:border-yellow-500 hover:bg-[#132B4D]"
           >
             <span className="text-xl text-yellow-400">
               🚪

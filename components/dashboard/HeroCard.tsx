@@ -93,7 +93,7 @@ export default function HeroCard({ memberId }: Props) {
 <div className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
   <div className="absolute -left-1/3 top-0 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
 </div>
-       <div className="relative z-10 flex flex-col gap-8 pt-2 lg:pt-0 lg:flex-row lg:items-center lg:justify-between">
+       <div className="relative z-10 flex flex-col gap-8 pt-10 lg:pt-0 lg:flex-row lg:items-center lg:justify-between">
 
         {/* Left */}
 
@@ -197,7 +197,7 @@ export default function HeroCard({ memberId }: Props) {
     py-3
     font-bold
     backdrop-blur-xl
-    shadow-lg
+    shadow-none lg:shadow-xl
     transition-all
     duration-300
     hover:scale-105

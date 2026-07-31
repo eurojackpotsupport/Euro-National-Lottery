@@ -36,10 +36,7 @@ export default function MembershipPage() {
 
       <div className="text-center lg:text-left">
 
-        <p className="text-xs sm:text-xs lg:text-sm font-bold uppercase tracking-[6px] text-yellow-400">
-          Official Membership
-        </p>
-
+        
         <h1
  className="
 mt-1
@@ -57,10 +54,6 @@ text-transparent
 >
           My Membership
         </h1>
-
-        <p className="mt-1 text-xs lg:text-sm sm:text-base text-slate-400">
-          Your official EuroMillions membership details.
-        </p>
 
       </div>
 
