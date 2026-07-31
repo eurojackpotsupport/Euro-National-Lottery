@@ -84,7 +84,7 @@ export default function Sidebar({
         </div>
 
         {/* Menu */}
-        <nav className="overflow-y-auto px-3 py-1 lg:flex-1 lg:py-2">
+        <nav className="flex-1 overflow-y-auto px-3 py-1 lg:py-2">
           <div className="space-y-1 lg:space-y-2">
             {menus.map((menu) => {
               const active = pathname === menu.href;
@@ -102,17 +102,17 @@ export default function Sidebar({
                 >
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <span className="flex h-6 w-6 items-center justify-center text-xl">
+                     <span className="flex h-6 w-6 items-center justify-center text-xl">
                         {menu.icon}
                       </span>
 
                       <span
-                        className={`text-[15px] lg:text-[16px] ${
-                          active ? "font-bold" : "font-medium"
-                        }`}
-                      >
-                        {menu.name}
-                      </span>
+  className={`text-lg lg:text-[16px] ${
+    active ? "font-bold" : "font-medium"
+  }`}
+>
+  {menu.name}
+</span>
                     </div>
 
                     {menu.badge && (
@@ -130,7 +130,7 @@ export default function Sidebar({
         </nav>
 
         {/* Logout */}
-        <div className="border-t border-slate-700 p-3 lg:p-4">
+        <div className="mt-auto border-t border-slate-700 bg-[#061529] p-3 lg:p-4">
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-4 rounded-xl border border-slate-700 bg-[#0B1F3A] px-5 py-3 lg:py-4 text-white transition hover:border-yellow-500 hover:bg-[#132B4D]"
