@@ -61,7 +61,7 @@ export default function ProfilePage() {
 
   <div className="lg:grid lg:grid-cols-[360px_1fr] lg:gap-10 lg:items-start">
 
- <div
+<div
   className="
     relative
     flex
@@ -72,6 +72,8 @@ export default function ProfilePage() {
     border-yellow-500/20
     bg-[#10284B]
     p-8
+    lg:min-h-[575px]
+    lg:justify-between
     lg:sticky
     lg:top-8
   "

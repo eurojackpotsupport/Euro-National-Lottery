@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Lock, KeyRound, X } from "lucide-react";
+import { Lock, KeyRound, X, Eye, EyeOff } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -20,6 +20,7 @@ export default function MembershipModal({
   error = "",
 }: Props) {
   const [code, setCode] = useState("");
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -82,19 +83,28 @@ export default function MembershipModal({
               {/* Input */}
               <div className="mt-8">
                 <div className="relative">
-                  <KeyRound
-                    size={18}
-                    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-400"
-                  />
+  <KeyRound
+    size={18}
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-400"
+  />
 
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Membership Code"
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-14 pr-4 text-white outline-none transition focus:border-yellow-400"
-                  />
-                </div>
+  <input
+    type={showCode ? "text" : "password"}
+    value={code}
+    onChange={(e) => setCode(e.target.value)}
+    placeholder="Membership Code"
+    className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-14 pr-14 text-white outline-none transition focus:border-yellow-400"
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowCode(!showCode)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-yellow-400"
+    aria-label={showCode ? "Hide membership code" : "Show membership code"}
+  >
+    {showCode ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
 
                 {error && (
                   <p className="mt-3 text-center text-sm text-red-400">

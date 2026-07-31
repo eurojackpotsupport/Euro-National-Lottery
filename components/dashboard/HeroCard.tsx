@@ -46,107 +46,330 @@ export default function HeroCard({ memberId }: Props) {
       : "bg-red-500/15 border-red-500 text-red-400";
 
   return (
-    <section className="rounded-[32px] border border-yellow-500/15 bg-gradient-to-br from-[#102C57] via-[#153866] to-[#0A1F3D] p-8 shadow-2xl">
+    <section
+  className="
+    relative
+    overflow-hidden
 
-      <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+    bg-transparent
+    border-0
+    shadow-none
+    rounded-none
+
+    px-1
+    py-1
+
+    lg:rounded-[36px]
+    lg:border
+    lg:border-yellow-400/20
+    lg:bg-gradient-to-br
+    lg:from-[#081B33]
+    lg:via-[#12345A]
+    lg:to-[#0B1F3D]
+    lg:px-8
+    lg:py-7
+    lg:shadow-[0_25px_80px_rgba(0,0,0,.45)]
+    lg:backdrop-blur-xl
+  "
+>
+{/* Background Glow */}
+<div className="pointer-events-none absolute hidden lg:block -left-32 -top-32 h-80 w-80 rounded-full bg-yellow-500/10 blur-3xl" />
+
+<div className="pointer-events-none absolute hidden lg:block -right-32 bottom-0 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+
+{/* Grid Pattern - Desktop Only */}
+<div
+  className="absolute inset-0 hidden lg:block opacity-[0.04]"
+  style={{
+    backgroundImage: `
+      linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px)
+    `,
+    backgroundSize: "40px 40px",
+  }}
+/>
+
+{/* Gold Shine - Desktop Only */}
+<div className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
+  <div className="absolute -left-1/3 top-0 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
+</div>
+       <div className="relative z-10 flex flex-col gap-8 pt-2 lg:pt-0 lg:flex-row lg:items-center lg:justify-between">
 
         {/* Left */}
 
-        <div className="flex flex-col items-center text-center lg:flex-row lg:items-center lg:text-left gap-6">
+<div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:items-center lg:gap-8 lg:text-left">
 
-  <div className="relative">
+  {/* Avatar */}
 
-    <div className="absolute inset-0 rounded-full bg-yellow-400 blur-2xl opacity-20"></div>
+  <div className="relative shrink-0">
 
-    <div className="relative h-28 w-28 overflow-hidden rounded-full border-4 border-yellow-400 sm:h-32 sm:w-32 lg:h-36 lg:w-36">
+    {/* Outer Gold Glow */}
+    <div className="absolute inset-0 scale-125 rounded-full bg-yellow-400/20 blur-3xl"></div>
+
+    {/* Decorative Ring */}
+    <div className="absolute -inset-2 rounded-full border border-yellow-400/20"></div>
+
+    {/* Avatar */}
+    <div className="relative h-32 w-32 overflow-hidden rounded-full border-[5px] border-yellow-400 shadow-[0_0_45px_rgba(250,204,21,0.25)] sm:h-36 sm:w-36 lg:h-44 lg:w-44">
 
       <Image
         src={member?.avatar_url || "/default-avatar.png"}
         alt="Member"
         fill
-        sizes="144px"
+        sizes="176px"
         className="object-cover"
       />
 
     </div>
 
-    <div className="absolute bottom-2 right-2 h-5 w-5 rounded-full border-2 border-[#102C57] bg-green-400 sm:h-6 sm:w-6"></div>
+    {/* Online Dot */}
+    <div className="absolute bottom-3 right-3 h-6 w-6 rounded-full border-4 border-[#081B33] bg-green-400 shadow-[0_0_20px_rgba(34,197,94,0.8)]"></div>
 
   </div>
 
-  <div className="w-full">
+  {/* Content */}
 
-    <p className="text-xs uppercase tracking-[5px] text-yellow-400 font-semibold sm:text-sm">
-      Welcome Back
+  <div>
+
+    <p className="text-xs font-bold uppercase tracking-[6px] text-yellow-400">
+      WELCOME BACK
     </p>
 
-    <h1 className="mt-2 break-words text-4xl font-black text-white sm:text-5xl lg:text-6xl">
+    <h1 className="mt-3 text-4xl font-black  text-white sm:text-5xl lg:text-7xl">
       {member?.full_name || "Member"}
     </h1>
 
-    <div className="mt-5 flex flex-wrap justify-center gap-3 lg:justify-start">
+    <p className="mt-3 text-sm uppercase tracking-[4px] text-slate-300">
+      Official EuroMillions Premium Member
+    </p>
 
-      <span className="rounded-full border border-yellow-500 bg-yellow-500/15 px-5 py-2 font-bold text-yellow-400">
-        {member?.membership}
-      </span>
+    <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
 
-      <span className={`rounded-full border px-5 py-2 font-bold ${statusClass}`}>
-        {member?.status}
-      </span>
+      <span
+  className="
+    group
+    relative
+    overflow-hidden
+    rounded-full
+    border
+    border-yellow-300/40
+    bg-gradient-to-r
+    from-yellow-500/20
+    via-yellow-300/10
+    to-yellow-500/20
+    px-7
+    py-3
+    font-bold
+    text-yellow-200
+    backdrop-blur-xl
+    shadow-[0_0_30px_rgba(250,204,21,.15)]
+  "
+>
+
+  <span className="relative z-10 flex items-center gap-2">
+    💎 {member?.membership}
+  </span>
+
+  <span
+    className="
+      absolute
+      -left-1/2
+      top-0
+      h-full
+      w-1/3
+      -skew-x-12
+      bg-gradient-to-r
+      from-transparent
+      via-white/30
+      to-transparent
+      transition-all
+      duration-1000
+      group-hover:left-[140%]
+    "
+  />
+
+</span>
+      <span
+  className={`
+    rounded-full
+    border
+    px-7
+    py-3
+    font-bold
+    backdrop-blur-xl
+    shadow-lg
+    transition-all
+    duration-300
+    hover:scale-105
+    ${statusClass}
+  `}
+>
+  ● {member?.status}
+</span>
 
     </div>
 
   </div>
 
 </div>
-
         {/* Right */}
 
-        <div className="grid w-full grid-cols-1 gap-6 text-center sm:grid-cols-2 sm:text-left">
+<div className="grid w-full grid-cols-1 gap-6 text-center sm:grid-cols-2 sm:text-left">
 
+  <div>
+    <p className="text-xs uppercase tracking-[3px] text-slate-400">
+      Member ID
+    </p>
+
+    <h3 className="mt-2 break-all text-xl font-bold text-yellow-400">
+      {member?.id}
+    </h3>
+  </div>
+
+  <div>
+    <p className="text-xs uppercase tracking-[3px] text-slate-400">
+      Country
+    </p>
+
+    <h3 className="mt-2 text-xl font-bold text-white">
+      {member?.country}
+    </h3>
+  </div>
+
+  <div>
+    <p className="text-xs uppercase tracking-[3px] text-slate-400">
+      Joined
+    </p>
+
+    <h3 className="mt-2 text-xl font-bold text-white">
+      {member?.joined_date}
+    </h3>
+  </div>
+
+  <div className="flex items-end justify-center sm:justify-start">
+    <Link
+  href="/dashboard/membership"
+  className="
+    group
+    relative
+    overflow-hidden
+    flex
+    items-center
+    justify-center
+    rounded-2xl
+    bg-gradient-to-r
+    from-yellow-500
+    via-yellow-400
+    to-yellow-500
+    px-8
+    py-6
+    font-bold
+    text-[#081B33]
+    shadow-[0_15px_45px_rgba(250,204,21,.30)]
+    transition-all
+    duration-300
+    hover:scale-[1.03]
+  "
+>
+<div
+  className="
+    pointer-events-none
+    absolute
+    right-8
+    bottom-2
+    hidden
+    lg:block
+    text-[170px]
+    font-black
+    leading-none
+    text-white/[0.03]
+    select-none
+  "
+>
+  VIP
+</div>
+
+  <span className="relative z-10">
+    View Membership →
+  </span>
+
+  <span
+    className="
+      absolute
+      -left-1/2
+      top-0
+      h-full
+      w-1/3
+      -skew-x-12
+      bg-white/40
+      transition-all
+      duration-700
+      group-hover:left-[130%]
+    "
+  />
+
+</Link>
+  </div>
+
+</div>
+
+            </div>
+
+      {/* Premium Status Strip */}
+
+      <div className="relative z-10 mt-10 grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl lg:grid-cols-4">
+
+        <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+          <div className="h-3 w-3 rounded-full bg-green-400 shadow-[0_0_15px_rgba(34,197,94,.8)]" />
           <div>
-            <p className="text-xs uppercase tracking-[3px] text-slate-400">
-              Member ID
+            <p className="text-[11px] uppercase tracking-[4px] text-slate-400">
+              Verification
             </p>
-
-            <h3 className="mt-2 break-all text-xl font-bold text-yellow-400">
-              {member?.id}
-            </h3>
+            <h4 className="font-bold text-white">
+              Verified Member
+            </h4>
           </div>
+        </div>
 
+        <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+          <div className="text-2xl">💎</div>
           <div>
-            <p className="text-xs uppercase tracking-[3px] text-slate-400">
+            <p className="text-[11px] uppercase tracking-[4px] text-slate-400">
+              Package
+            </p>
+            <h4 className="font-bold text-yellow-300">
+              {member?.membership}
+            </h4>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+          <div className="text-2xl">🌍</div>
+          <div>
+            <p className="text-[11px] uppercase tracking-[4px] text-slate-400">
               Country
             </p>
-
-            <h3 className="mt-2 text-xl font-bold text-white">
+            <h4 className="font-bold text-white">
               {member?.country}
-            </h3>
+            </h4>
           </div>
+        </div>
 
+        <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+          <div className="text-2xl">🔒</div>
           <div>
-            <p className="text-xs uppercase tracking-[3px] text-slate-400">
-              Joined
+            <p className="text-[11px] uppercase tracking-[4px] text-slate-400">
+              Security
             </p>
-
-            <h3 className="mt-2 text-xl font-bold text-white">
-              {member?.joined_date}
-            </h3>
+            <h4 className="font-bold text-green-400">
+              Protected
+            </h4>
           </div>
-
-          <div className="flex items-end justify-center sm:justify-start">
-            <Link
-              href="/dashboard/membership"
-              className="w-full rounded-xl bg-yellow-500 px-6 py-3 text-center font-bold text-black transition hover:bg-yellow-400 sm:w-auto"
-            >
-              View Membership →
-            </Link>
-          </div>
-
         </div>
 
       </div>
 
     </section>
+    
   );
 }

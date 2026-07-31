@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginForm() {
   const [memberId, setMemberId] = useState("");
+  const [showMemberId, setShowMemberId] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -71,22 +73,35 @@ export default function LoginForm() {
 
         <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div>
-            <label className="mb-2 block text-slate-300">
-              Member ID
-            </label>
+  <label className="mb-2 block text-slate-300">
+    Member ID
+  </label>
 
-            <input
-              type="text"
-              value={memberId}
-              onChange={(e) => {
-                setMemberId(e.target.value.toUpperCase());
-                setError("");
-              }}
-              placeholder="EM26-XXXX-XXXX"
-              className="w-full rounded-xl border border-slate-700 bg-[#102b52] px-5 py-4 text-white outline-none focus:border-yellow-400"
-            />
-          </div>
+  <div className="relative">
+    <input
+      type={showMemberId ? "text" : "password"}
+      value={memberId}
+      onChange={(e) => {
+        setMemberId(e.target.value.toUpperCase());
+        setError("");
+      }}
+      placeholder="EM26-XXXX-XXXX"
+      className="w-full rounded-xl border border-slate-700 bg-[#102b52] py-4 pl-5 pr-14 text-white outline-none focus:border-yellow-400"
+    />
 
+    <button
+      type="button"
+      onClick={() => setShowMemberId(!showMemberId)}
+      className="absolute inset-y-0 right-0 flex w-14 items-center justify-center text-slate-400 transition hover:text-yellow-400"
+    >
+      {showMemberId ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+  </div>
+</div>
           {error && (
             <p className="text-sm text-red-400">
               {error}

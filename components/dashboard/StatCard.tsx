@@ -41,27 +41,64 @@ export default function StatCard({
   const style = colors[color];
 
   return (
-    <div
-      className={`group rounded-3xl border ${style.border} bg-[#102C57]/80 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 ${style.glow}`}
-    >
+  <div
+    className={`
+      group
+      relative
+      overflow-hidden
+      rounded-[30px]
+      border
+      ${style.border}
+      bg-gradient-to-br
+      from-[#102C57]/95
+      via-[#123A68]/90
+      to-[#0A1F3D]/95
+      p-7
+      backdrop-blur-xl
+      transition-all
+      duration-500
+      hover:-translate-y-2
+      ${style.glow}
+    `}
+  >
+    {/* Gold Glow */}
+    <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-yellow-500/10 blur-3xl" />
+
+    {/* Shine */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute -left-1/2 top-0 h-full w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-all duration-700 group-hover:left-[140%] group-hover:opacity-100" />
+    </div>
+
+    <div className="relative z-10">
+
       {/* Icon */}
 
       <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-3xl ${style.icon}`}
+        className={`
+          flex
+          h-16
+          w-16
+          items-center
+          justify-center
+          rounded-2xl
+          text-3xl
+          shadow-lg
+          ${style.icon}
+        `}
       >
         {icon}
       </div>
 
       {/* Title */}
 
-      <p className="mt-6 text-xs uppercase tracking-[4px] text-slate-400">
+      <p className="mt-6 text-[11px] font-semibold uppercase tracking-[5px] text-slate-400">
         {title}
       </p>
 
       {/* Value */}
 
       <h2
-        className={`mt-3 text-3xl font-black leading-tight ${style.value}`}
+        className={`mt-4 text-4xl font-black leading-none ${style.value}`}
       >
         {value}
       </h2>
@@ -69,14 +106,22 @@ export default function StatCard({
       {/* Subtitle */}
 
       {subtitle && (
-        <p className="mt-3 text-sm text-slate-400">
+        <p className="mt-4 text-sm leading-6 text-slate-300">
           {subtitle}
         </p>
       )}
 
-      {/* Accent line */}
+      {/* Bottom Accent */}
 
-      <div className="mt-6 h-1 w-16 rounded-full bg-gradient-to-r from-yellow-400 to-transparent opacity-70"></div>
+      <div className="mt-7 flex items-center gap-3">
+
+        <div className="h-[3px] w-20 rounded-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-transparent" />
+
+        <div className="h-2 w-2 rounded-full bg-yellow-400" />
+
+      </div>
+
     </div>
-  );
+  </div>
+);
 }
