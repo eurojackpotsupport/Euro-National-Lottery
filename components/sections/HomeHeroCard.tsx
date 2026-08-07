@@ -13,10 +13,11 @@ export default function HomeHeroCard() {
   const [jackpot, setJackpot] = useState<Jackpot | null>(null);
 
   const [countdown, setCountdown] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+});
 
   useEffect(() => {
     loadJackpot();
@@ -25,27 +26,35 @@ export default function HomeHeroCard() {
   useEffect(() => {
     if (!jackpot?.next_draw) return;
 
-    const updateCountdown = () => {
-      const target = new Date(jackpot.next_draw).getTime();
-      const now = Date.now();
+  const updateCountdown = () => {
+  if (!jackpot) return;
 
-      const distance = target - now;
+  // Admin saves date (YYYY-MM-DD) and time (HH:mm)
+  // Time is treated as UTC+2
+  const target = new Date(
+    `${jackpot.next_draw}T${jackpot.time}:00+02:00`
+  ).getTime();
 
-      if (distance <= 0) {
-        setCountdown({
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        });
-        return;
-      }
+  const now = Date.now();
+  const distance = target - now;
 
-      setCountdown({
-        hours: Math.floor((distance / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((distance / (1000 * 60)) % 60),
-        seconds: Math.floor((distance / 1000) % 60),
-      });
-    };
+  if (distance <= 0) {
+    setCountdown({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
+    return;
+  }
+
+  setCountdown({
+    days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((distance % (1000 * 60)) / 1000),
+  });
+};
 
     updateCountdown();
 
@@ -104,7 +113,7 @@ export default function HomeHeroCard() {
 
         {/* Cards */}
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_0.9fr_1fr]">
+       <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.2fr_1fr]">
 
           {/* Status */}
 
@@ -137,16 +146,17 @@ export default function HomeHeroCard() {
               Countdown
             </p>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-1 sm:gap-2">
 
               {[
-                { value: countdown.hours, label: "H" },
-                { value: countdown.minutes, label: "M" },
-                { value: countdown.seconds, label: "S" },
-              ].map((item) => (
+  { value: countdown.days, label: "D" },
+  { value: countdown.hours, label: "H" },
+  { value: countdown.minutes, label: "M" },
+  { value: countdown.seconds, label: "S" },
+].map((item) => (
                 <div key={item.label} className="text-center">
 
-                   <div className="flex h-14 w-14 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-[#10284A] text-2xl sm:text-lg font-black text-yellow-400">
+                   <div className="flex h-16 w-16 sm:h-10 sm:w-10 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-[#10284A] text-2xl sm:text-base lg:text-xl font-black text-yellow-400">
                     {String(item.value).padStart(2, "0")}
                   </div>
 
@@ -165,15 +175,21 @@ export default function HomeHeroCard() {
 
           <div className="rounded-2xl border border-yellow-500/20 bg-[#081B33] p-5 flex flex-col justify-center items-center min-h-[130px]">
 
-  <div className="text-center">
+ <div className="flex flex-col items-center flex-1">
 
-    <p className="text-sm sm:text-xs uppercase tracking-[0.35em] text-slate-400">
-      Draw Time
-    </p>
+<p className="text-sm sm:text-xs uppercase tracking-[0.35em] text-slate-400">
+  Draw Time
+</p>
 
-    <h3 className="mt-4 text-3xl sm:text-xl lg:text-2xl font-bold text-white whitespace-nowrap">
-  {jackpot?.time ?? "--"}
-</h3>
+<div className="mt-4 text-center">
+  <h3 className="text-3xl sm:text-xl lg:text-2xl font-bold text-white">
+    {jackpot?.time ?? "--"}
+  </h3>
+
+  <p className="mt-2 text-sm font-semibold text-slate-300">
+    UTC+2 (CEST)
+  </p>
+</div>
 
   </div>
 

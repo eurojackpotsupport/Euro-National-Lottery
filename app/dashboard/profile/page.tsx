@@ -170,16 +170,16 @@ hover:shadow-[0_20px_50px_rgba(250,204,21,.15)]
         </p>
 
         <h3
-          className={`mt-3 text-xl font-bold ${
-            color==="yellow"
-              ? "text-yellow-400"
-              : color==="emerald"
-              ? "text-emerald-400"
-              : "text-white"
-          }`}
-        >
-          {value}
-        </h3>
+  className={`mt-3 text-xl font-bold break-all leading-tight ${
+    color === "yellow"
+      ? "text-yellow-400"
+      : color === "emerald"
+      ? "text-emerald-400"
+      : "text-white"
+  }`}
+>
+  {value}
+</h3>
 
       </div>
     ))}

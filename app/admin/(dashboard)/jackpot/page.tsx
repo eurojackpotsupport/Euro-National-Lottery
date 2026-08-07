@@ -78,11 +78,11 @@ alert(session?.user?.email || "No session");
             </label>
 
             <input
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
-            />
-          </div>
+  type="text"
+  value={amount}
+  onChange={(e) => setAmount(e.target.value)}
+  className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
+/>       </div>
 
           <div>
             <label className="mb-2 block text-white">
@@ -90,10 +90,11 @@ alert(session?.user?.email || "No session");
             </label>
 
             <input
-              value={nextDraw}
-              onChange={(e) => setNextDraw(e.target.value)}
-              className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
-            />
+  type="date"
+  value={nextDraw}
+  onChange={(e) => setNextDraw(e.target.value)}
+  className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
+/>
           </div>
 
           <div>
@@ -102,10 +103,11 @@ alert(session?.user?.email || "No session");
             </label>
 
             <input
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
-            />
+  type="time"
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+  className="w-full rounded-xl bg-[#081B33] px-5 py-4 text-white"
+/>
           </div>
 
           <button

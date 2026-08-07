@@ -9,13 +9,15 @@ export default function VaultAdminPage() {
 
   const [packages, setPackages] = useState<any[]>([]);
   const [codes, setCodes] = useState<any[]>([]);
-  const [form, setForm] = useState({
-    title: "",
-    subtitle: "",
-    draw_date: "",
-    draw_time: "",
-    status: "locked",
-  });
+const [form, setForm] = useState({
+  title: "",
+  subtitle: "",
+  draw_date: "",
+  draw_time: "",
+  timezone: "UTC+2 (CEST)",
+  release_hours: 5,
+  status: "locked",
+});
 
  useEffect(() => {
   async function init() {
@@ -38,12 +40,14 @@ export default function VaultAdminPage() {
 
     if (data) {
       setForm({
-        title: data.title ?? "",
-        subtitle: data.subtitle ?? "",
-        draw_date: data.draw_date ?? "",
-        draw_time: data.draw_time ?? "",
-        status: data.status ?? "locked",
-      });
+  title: data.title ?? "",
+  subtitle: data.subtitle ?? "",
+  draw_date: data.draw_date ?? "",
+  draw_time: data.draw_time ?? "",
+  timezone: data.timezone ?? "UTC+2 (CEST)",
+  release_hours: data.release_hours ?? 5,
+  status: data.status ?? "locked",
+});
     }
 
     setLoading(false);
@@ -88,12 +92,14 @@ async function saveSettings() {
   const { error } = await supabase
     .from("vault_settings")
     .update({
-      title: form.title,
-      subtitle: form.subtitle,
-      draw_date: form.draw_date,
-      draw_time: form.draw_time,
-      status: form.status,
-    })
+  title: form.title,
+  subtitle: form.subtitle,
+  draw_date: form.draw_date,
+  draw_time: form.draw_time,
+  timezone: form.timezone,
+  release_hours: form.release_hours,
+  status: form.status,
+})
     .eq("id", 1);
 
   if (error) {
@@ -282,6 +288,35 @@ console.log("codes state:", codes);
               }
             />
           </div>
+          <label className="mt-6 block text-sm font-bold text-yellow-400">
+  TIMEZONE
+</label>
+
+<select
+  value={form.timezone}
+  onChange={(e) =>
+    setForm({ ...form, timezone: e.target.value })
+  }
+  className="mt-2 w-full rounded-xl border border-yellow-500/20 bg-[#18345F] p-4 text-white"
+>
+  <option value="UTC+2 (CEST)">UTC+2 (CEST)</option>
+</select>
+
+<label className="mt-6 block text-sm font-bold text-yellow-400">
+  RELEASE HOURS BEFORE DRAW
+</label>
+
+<input
+  type="number"
+  value={form.release_hours}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      release_hours: Number(e.target.value),
+    })
+  }
+  className="mt-2 w-full rounded-xl border border-yellow-500/20 bg-[#18345F] p-4 text-white"
+/>
 
           {/* Status */}
 

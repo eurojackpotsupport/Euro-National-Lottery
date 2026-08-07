@@ -48,12 +48,27 @@ useEffect(() => {
     }
 
     const updateCountdown = () => {
-      const drawDate = new Date(
-        `${data.draw_date}T${data.draw_time}`
-      );
+   const [hourMinute, period] = data.draw_time.split(" ");
 
-      // Prediction release = Draw - 5 hours
-      drawDate.setHours(drawDate.getHours() - 5);
+let [hours, minutes] = hourMinute.split(":").map(Number);
+
+if (period === "PM" && hours !== 12) hours += 12;
+if (period === "AM" && hours === 12) hours = 0;
+
+const [year, month, day] = data.draw_date.split("-").map(Number);
+
+const drawDate = new Date(
+  year,
+  month - 1,
+  day,
+  hours,
+  minutes,
+  0,
+  0
+);
+
+// Prediction release = Draw - 5 hours
+drawDate.setHours(drawDate.getHours() - 1);
 
       const now = Date.now();
       let target = drawDate.getTime();
@@ -84,19 +99,29 @@ useEffect(() => {
   };
 }, []);
 
-const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+const days = Math.floor(
+  timeLeft / (1000 * 60 * 60 * 24)
+);
+
+const hours = Math.floor(
+  (timeLeft % (1000 * 60 * 60 * 24)) /
+  (1000 * 60 * 60)
+);
 
 const minutes = Math.floor(
-  (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+  (timeLeft % (1000 * 60 * 60)) /
+  (1000 * 60)
 );
 
 const seconds = Math.floor(
   (timeLeft % (1000 * 60)) / 1000
 );
 
-const live = settings.status === "live";
-
 const countdown = [
+  {
+    value: String(days).padStart(2, "0"),
+    label: "Days",
+  },
   {
     value: String(hours).padStart(2, "0"),
     label: "Hours",
@@ -173,7 +198,7 @@ sm:to-[#06182F]
       {/* Timer starts here */}
             <div className="relative mt-10">
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-5 lg:gap-8">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-5 lg:gap-8">
 
           {countdown.map((item) => (
 
@@ -229,7 +254,9 @@ sm:to-[#06182F]
 
           <div
             className={`mt-4 text-3xl font-black ${
-              live ? "text-emerald-400" : "text-yellow-400"
+              settings.status === "live"
+  ? "text-emerald-400"
+  : "text-yellow-400"
             }`}
           >
             {settings.status.toUpperCase()}
@@ -254,22 +281,32 @@ sm:to-[#06182F]
           <div className="mt-4 text-3xl font-black text-white">
            {settings.draw_time
   ? (() => {
-      const d = new Date(
-        `2000-01-01T${settings.draw_time}`
-      );
+      const [time, period] = settings.draw_time.split(" ");
 
-      d.setHours(d.getHours() - 5);
+      let [hours, minutes] = time.split(":").map(Number);
 
-      return d.toLocaleTimeString([], {
-        hour: "numeric",
+      if (period === "PM" && hours !== 12) hours += 12;
+      if (period === "AM" && hours === 12) hours = 0;
+
+      // Subtract 5 hours (or use your release_hours setting)
+      hours -= 5;
+
+      if (hours < 0) hours += 24;
+
+      const prediction = new Date();
+      prediction.setHours(hours, minutes, 0, 0);
+
+      return prediction.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
     })()
   : "--"}
           </div>
 
           <div className="mt-2 text-sm text-slate-400">
-            GMT +1
+            UTC+2 (CEST)
           </div>
 
         </div>
@@ -284,15 +321,21 @@ sm:to-[#06182F]
 
           <div className="mt-4 text-3xl font-black text-white">
             {settings.draw_time
-  ? new Date(`2000-01-01T${settings.draw_time}`).toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-    })
+  ? (() => {
+      const [time, period] = settings.draw_time.split(" ");
+
+      let [hours, minutes] = time.split(":").map(Number);
+
+      if (period === "PM" && hours !== 12) hours += 12;
+      if (period === "AM" && hours === 12) hours = 0;
+
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    })()
   : "--"}
           </div>
 
           <div className="mt-2 text-sm text-slate-400">
-            GMT +1
+            UTC+2 (CEST)
           </div>
 
         </div>

@@ -23,13 +23,15 @@ export default function HeroCard({
 
 useEffect(() => {
   const timer = setInterval(() => {
-    const target = Date.parse(nextDraw);
-if (isNaN(target)) return;
-    const now = new Date().getTime();
+    const target = new Date(
+  `${nextDraw}T${time}:00+02:00`
+).getTime();
 
-    const distance = target - now;
+const now = Date.now();
 
-    if (distance <= 0) return;
+const distance = target - now;
+
+if (isNaN(target) || distance <= 0) return;
 
     setCountdown({
       days: Math.floor(distance / (1000 * 60 * 60 * 24)),
@@ -143,16 +145,17 @@ to-[#1A4C80]
     Countdown
   </p>
 
-  <div className="flex items-center justify-center gap-4">
+  <div className="flex items-center justify-center gap-1 sm:gap-2">
 
     {[
-      { value: countdown.hours, label: "H" },
-      { value: countdown.minutes, label: "M" },
-      { value: countdown.seconds, label: "S" },
+  { value: countdown.days, label: "D" },
+  { value: countdown.hours, label: "H" },
+  { value: countdown.minutes, label: "M" },
+  { value: countdown.seconds, label: "S" },
     ].map((item) => (
       <div key={item.label} className="text-center">
 
-        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#10284A] text-2xl font-black text-yellow-400">
+        <div className="flex h-16 w-16 lg:h-18 lg:w-18 items-center justify-center rounded-xl bg-[#10284A] text-2xl font-black text-yellow-400">
           {String(item.value).padStart(2, "0")}
         </div>
 
@@ -169,17 +172,21 @@ to-[#1A4C80]
 
   {/* Draw Time */}
 
-  <div className="flex h-[150px] flex-col items-center justify-center rounded-2xl border border-yellow-500/20 bg-[#081B33] p-6">
+<div className="flex h-[150px] flex-col items-center justify-center rounded-2xl border border-yellow-500/20 bg-[#081B33] p-6">
 
-    <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-      Draw Time
-    </p>
+  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+    Draw Time
+  </p>
 
-    <h3 className="mt-5 text-2xl xl:text-3xl font-black text-white whitespace-nowrap">
-      {time}
-    </h3>
+  <h3 className="mt-4 text-2xl xl:text-3xl font-black text-white whitespace-nowrap">
+    {time}
+  </h3>
 
-  </div>
+<p className="mt-2 text-sm uppercase tracking-[0.2em] font-semibold text-slate-300">
+  UTC+2 (CEST)
+</p>
+
+</div>
 
 </div>
         <div className="mt-16">
