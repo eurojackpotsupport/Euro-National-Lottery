@@ -10,8 +10,19 @@ type Jackpot = {
   amount: string;
   time: string;
 };
+type UpcomingCard = {
+  ball1: number;
+  ball2: number;
+  ball3: number;
+  ball4: number;
+  ball5: number;
+  star1: number;
+  star2: number;
+  show_numbers: boolean;
+};
 export default function UpcomingDrawCard() {
   const [jackpot, setJackpot] = useState<Jackpot | null>(null);
+  const [upcomingCard, setUpcomingCard] = useState<UpcomingCard | null>(null);
 
   useEffect(() => {
     loadJackpot();
@@ -29,7 +40,17 @@ if (error) {
 }
 
 setJackpot(data);
+const { data: upcoming } = await supabase
+  .from("upcoming_draw_card")
+  .select("*")
+  .eq("id", 1)
+  .single();
+
+if (upcoming) {
+  setUpcomingCard(upcoming);
+}
   }
+  
 
   function formatDrawDate(date: string) {
     return new Date(date).toLocaleDateString("en-GB", {
@@ -124,7 +145,17 @@ hover:scale-[1.01]
         <div className="mx-auto mb-4 h-px w-32 bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
         {/* Premium Locked Balls */}
 <div className="flex justify-center gap-3">
-  {Array.from({ length: 5 }).map((_, i) => (
+  {(
+  upcomingCard?.show_numbers
+    ? [
+        upcomingCard.ball1,
+        upcomingCard.ball2,
+        upcomingCard.ball3,
+        upcomingCard.ball4,
+        upcomingCard.ball5,
+      ]
+    : [null, null, null, null, null]
+).map((num, i) => (
     <div
   key={i}
   className="
@@ -162,44 +193,56 @@ hover:scale-[1.01]
   {/* Bottom Reflection */}
   <div className="absolute bottom-3 right-3 h-2 w-2 rounded-full bg-yellow-100/70 blur-[1px]" />
 
-  {/* Lock */}
+{upcomingCard?.show_numbers ? (
+  <span className="text-2xl font-black text-[#081B33]">
+    {num}
+  </span>
+) : (
   <Lock
     size={24}
     strokeWidth={2.8}
-    className="relative z-10 text-[#081B33]"
+    className="text-[#081B33]"
   />
+)}
 </div>
   ))}
 </div>
-        {/* Locked Lucky Stars */}
-        <div className="mt-3 flex justify-center gap-3">
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div
-  key={i}
-  className="relative h-16 w-16 md:h-20 md:w-20 transition-all duration-300 transition-all
-duration-500
-hover:-translate-y-2
-hover:scale-105
-drop-shadow-[0_0_12px_rgba(255,215,0,.5)] drop-shadow-[0_0_10px_rgba(255,215,0,.45)]"
->
-              <Image
-  src="/star-ball.png"
-  alt="Lucky Star"
-  fill
-  className="object-contain"
-  priority
-/>
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Lock
-                  size={18}
-                  strokeWidth={2.8}
-                  className="text-black"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Lucky Stars */}
+<div className="mt-6 flex justify-center gap-8">
+  {(
+    upcomingCard?.show_numbers
+      ? [upcomingCard.star1, upcomingCard.star2]
+      : [null, null]
+  ).map((num, i) => (
+    <div
+      key={i}
+      className="relative h-16 w-16 md:h-20 md:w-20 transition-all duration-500 hover:-translate-y-2 hover:scale-105 drop-shadow-[0_0_12px_rgba(255,215,0,.5)]"
+    >
+      <Image
+        src="/star-ball.png"
+        alt="Lucky Star"
+        fill
+        className="object-contain"
+        priority
+      />
+
+      <div className="absolute inset-0 flex items-center justify-center">
+        {upcomingCard?.show_numbers ? (
+          <span className="text-2xl font-black text-black">
+            {num}
+          </span>
+        ) : (
+          <Lock
+            size={18}
+            strokeWidth={2.8}
+            className="text-black"
+          />
+        )}
+      </div>
+    </div>
+  ))}
+</div>
 
 {/* VIP Status */}
 <div className="mt-5 md:mt-8 rounded-3xl border border-yellow-400/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl p-3 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">

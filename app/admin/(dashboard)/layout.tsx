@@ -13,6 +13,7 @@ const menus = [
   { name: "Membership Codes", href: "/admin/membership-codes" },
   { name: "Jackpot", href: "/admin/jackpot" },
   { name: "VIP Vault", href: "/admin/vault" },
+   { name: "Upcoming Card", href: "/admin/upcoming-card" },
   { name: "Results", href: "/admin/results" },
   { name: "Latest Results", href: "/admin/latest-results" },
   { name: "Winners", href: "/admin/winners" },
